@@ -1,0 +1,105 @@
+<div class="container-body">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        PRODUITS
+      </mat-card-title>
+      <mat-card-actions>
+        <button class="add" (click)="categorie()" mat-raised-button>CATEGORIE</button>
+        <button class="add" (click)="ajouterProd()" mat-raised-button>
+          <mat-icon class="addIcon">library_add</mat-icon>
+          NOUVEAU PRODUITS
+        </button>
+      </mat-card-actions>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Rechercher</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher un produit">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <div class="mat-elevation-z8">
+        <table matSort mat-table [dataSource]="dataSource">
+
+          <!-- designation Column -->
+          <ng-container matColumnDef="designation" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> DESIGNATION </th>
+            <td mat-cell *matCellDef="let produit"> {{produit.designation}} </td>
+          </ng-container>
+
+          <!-- quantite Column -->
+          <ng-container matColumnDef="quantite" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> QUANTITE </th>
+            <td mat-cell *matCellDef="let produit"> {{produit.quantite}} </td>
+          </ng-container>
+
+          <!-- prix Unitaire Column -->
+          <ng-container matColumnDef="prixUnitaire" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> PRIX UNITAIRE </th>
+            <td mat-cell *matCellDef="let produit"> {{produit.prixUnitaire}} </td>
+          </ng-container>
+
+          <!-- prix Unitaire Column -->
+          <ng-container matColumnDef="montant" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> MONTANT </th>
+            <td mat-cell *matCellDef="let produit"> {{produit.montant}} </td>
+          </ng-container>
+
+          <!-- date Column -->
+          <ng-container matColumnDef="date" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> DATE D'AJOUT </th>
+            <td mat-cell *matCellDef="let produit"> {{formatDate(produit.date)}} </td>
+          </ng-container>
+
+          <!-- image Column -->
+          <ng-container matColumnDef="cat" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> CATEGORIE </th>
+            <td mat-cell *matCellDef="let produit"> {{produit.categorieStockProdDTO?.nom}} </td>
+          </ng-container>
+
+          <!-- designation Column -->
+          <ng-container matColumnDef="utilisateurProd" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> UTILISATEUR </th>
+            <td mat-cell *matCellDef="let produit"> {{produit.utilisateurProd?.nom}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef> ACTION </th>
+            <td mat-cell *matCellDef="let produit">
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button class="modifier" mat-menu-item (click)="modifier(produit.idProd)">
+                  <mat-icon class="modifierIcon">edit</mat-icon>
+                  <span>Modifier</span>
+                </button>
+                <button class="supprimer" mat-menu-item (click)="supprimer(produit.idProd)">
+                  <mat-icon class="supprimerIcon">delete</mat-icon>
+                  <span>Supprimer</span>
+                </button>
+                <button class="details" mat-menu-item (click)="details()">
+                  <mat-icon class="detailsIcon">info</mat-icon>
+                  <span>Détails</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                       showFirstLastButtons
+                       aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>

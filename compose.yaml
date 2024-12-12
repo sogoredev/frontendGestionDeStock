@@ -1,0 +1,32 @@
+services:
+  stock-database:
+    image: mysql:8.0
+    container_name: stock-database
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: StockBackend@2024ml
+      MYSQL_DATABASE: stock
+      MYSQL_USER: stock
+      MYSQL_PASSWORD: StockBackend@2024ml
+    ports:
+      - "3306:3306"
+    volumes:
+      - stock-database-data:/var/lib/mysql
+    networks:
+      - applications-network
+
+  adminer:
+    image: adminer:4.8.1-standalone
+    container_name: stock-database-ihm
+    restart: always
+    networks:
+      - applications-network
+
+networks:
+  applications-network:
+    external: true
+    name: applications-network
+
+volumes:
+  stock-database-data:

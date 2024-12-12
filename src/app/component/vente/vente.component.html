@@ -1,0 +1,112 @@
+<div class="container-body">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>VENTE</mat-card-title>
+      <mat-card-actions>
+        <button class="addVente" (click)="ajouterVente()" mat-raised-button>AJOUTER VENTE</button>
+      </mat-card-actions>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Rechercher</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher une vente">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <div class="mat-elevation-z8">
+        <table matSort mat-table [dataSource]="dataSource">
+
+          <!-- designation Column -->
+          <ng-container matColumnDef="description" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> TITRE </th>
+            <td mat-cell *matCellDef="let vente"> {{vente.description}} </td>
+          </ng-container>
+
+          <!-- date Column -->
+          <ng-container matColumnDef="quantite" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> QUANTITE TOTAL </th>
+            <td mat-cell *matCellDef="let vente"> {{vente.quantite}} </td>
+          </ng-container>
+
+          <!-- prix Unitaire Column -->
+          <ng-container matColumnDef="montant" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> MONTANT TOTAL </th>
+            <td mat-cell *matCellDef="let vente"> {{vente.montant}} </td>
+          </ng-container>
+
+          <!-- note Column -->
+          <ng-container matColumnDef="reduction" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> REDUCTION TOTAL </th>
+            <td mat-cell *matCellDef="let vente"> {{vente.reduction}} </td>
+          </ng-container>
+
+          <!-- note Column -->
+          <ng-container matColumnDef="dateVente" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> DATE DE VENTE </th>
+            <td mat-cell *matCellDef="let vente"> {{formatDate(vente.dateVente)}} </td>
+          </ng-container>
+
+          <!-- note Column -->
+          <ng-container matColumnDef="clientDTO" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> CLIENT </th>
+            <td mat-cell *matCellDef="let vente"> {{vente.clientDTO?.nom}} </td>
+          </ng-container>
+
+          <!-- note Column -->
+          <ng-container matColumnDef="utilisateurVente" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> UTILISATEUR </th>
+            <td mat-cell *matCellDef="let vente"> {{vente.utilisateurVente?.nom}} </td>
+          </ng-container>
+
+          <!-- note Column -->
+          <ng-container matColumnDef="status" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+            <td mat-cell *matCellDef="let vente">
+              <div [ngClass]="{'traiter': vente.status === 'TRAITER', 'annuler': vente.status === 'ANNULER'}">
+                {{vente.status}}
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action" class="mat-elevation-z8">
+            <th mat-header-cell *matHeaderCellDef> ACTION </th>
+            <td mat-cell *matCellDef="let vente">
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button class="modifierVente" mat-menu-item (click)="modifier(vente.idVente)">
+                  <mat-icon class="modifier">edit</mat-icon>
+                  <span>Modifier</span>
+                </button>
+                <button class="supprimerVente" mat-menu-item (click)="supprimer(vente)">
+                  <mat-icon class="supprimer">delete</mat-icon>
+                  <span>Supprimer</span>
+                </button>
+                <button class="detailsVente" mat-menu-item (click)="details()">
+                  <mat-icon class="details">info</mat-icon>
+                  <span>Détails</span>
+                </button>
+                <button class="annulerVente" mat-menu-item (click)="annuler(vente)">
+                  <mat-icon class="annulerVte">remove_shopping_cart</mat-icon>
+                  <span>Annuler</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                       showFirstLastButtons
+                       aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>
