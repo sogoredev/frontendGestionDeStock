@@ -70,4 +70,3 @@ jobs:
           port: 22
           script: |
             docker-compose -f /opt/applications/stock/${{env.IMAGE}}/compose.yml up -d
-            rm /opt/applications/stock/${{env.IMAGE}}/.env
