@@ -43,6 +43,10 @@ jobs:
         with:
           push: true
           tags: sogoredev/${{env.IMAGE}}:${{env.VERSION}}
+      - name: Debug Variables
+        run:
+          echo "DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}"
+
 
   run-container:
     name: generer un container
@@ -58,7 +62,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           port: 22
-          source: "compose.yml"
+          source: "compose.yaml"
           target: /opt/applications/stock/${{env.IMAGE}}
       - name: execute commands to run container
         uses: appleboy/ssh-action@v1.2.0
