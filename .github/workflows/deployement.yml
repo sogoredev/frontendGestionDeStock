@@ -31,7 +31,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}  # Token Docker Hub (stocké dans les secrets GitHub)
 
-      # 5. Build the Docker image
+      # 5. Build the Docker image 1
       - name: Build Docker Image
         run: |
           docker build -t sogoredev/stock-front:${{ github.sha }} -f Dockerfile .
