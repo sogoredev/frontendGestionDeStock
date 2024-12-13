@@ -29,5 +29,5 @@ jobs:
       # Build and push Docker image
       - name: Build and Push Frontend Image
         run: |
-          docker build -t stock-frontend:${{ github.sha }} -f frontend/Dockerfile frontend/
+          docker build -t stock-frontend:${{ github.sha }} -f frontendGestionDeStock/Dockerfile frontend/
           docker push stock-frontend:${{ github.sha }}
