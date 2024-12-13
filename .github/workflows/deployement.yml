@@ -1,3 +1,4 @@
+# Workflow GitHub Actions avec le bon chemin pour Docker
 name: Build and Push Frontend Docker Image
 
 on:
@@ -10,13 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout cod
+      # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      # Change to the frontend directory
-      - name: Navigate to frontend directory
-        run: cd frontend
 
       # Set up Docker Buildx
       - name: Set up Docker Buildx
@@ -32,5 +29,5 @@ jobs:
       # Build and push Docker image
       - name: Build and Push Frontend Image
         run: |
-          docker build -t stock-frontend:${{ github.sha }} -f frontend/Dockerfile .
+          docker build -t stock-frontend:${{ github.sha }} -f frontend/Dockerfile frontend/
           docker push stock-frontend:${{ github.sha }}
