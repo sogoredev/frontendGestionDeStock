@@ -20,11 +20,11 @@ jobs:
           echo "Listing all files in the repository..."
           ls -alh
 
-      # Set up Docker Buildx
+      # Set up Docker Buildx g
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # Log in to Docker Hub
+      # Log in to Docker Hub b
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
