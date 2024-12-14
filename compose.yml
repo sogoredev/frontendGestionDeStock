@@ -1,8 +1,10 @@
 services:
   stock-front:
-    image: docker.io/sogoredev/stock-front
+    image: sogoredev/stock-front:latest
     container_name: stock-front
     restart: always
+    volumes:
+      - ./app:/app
     networks:
       - applications-network
 
