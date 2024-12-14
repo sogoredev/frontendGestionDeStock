@@ -1,8 +1,12 @@
-version: '3.7'
 services:
-  frontend:
-    image: stock-frontend:latest
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+  stock-front:
+    image: docker.io/sogoredev/stock-front
+    container_name: stock-front
+    restart: always
+    networks:
+      - applications-network
+
+networks:
+  applications-network:
+    external: true
+    name: applications-network

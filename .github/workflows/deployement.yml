@@ -1,47 +1,71 @@
-name: Build and Push Frontend Docker Image
-
-on:
-  push:
-    branches:
-      - main  # Déclenche ce workflow uniquement sur des pushs sur la branche 'main'
-
+name: deploy stock back
+on: [push]
+env:
+  IMAGE: stock-front
+  VERSION: 3.3.1
 jobs:
-  build:
+
+  create-folder:
+    name: create folder
     runs-on: ubuntu-latest
-
     steps:
-      # 1. Checkout the repository
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: execute commands
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: 22
+          script: |
+            echo "Creation du dossier sur le serveur.."
+            mkdir -p /opt/applications/stock/${{env.IMAGE}}
+            echo "Liste des fichiers :"
+            ls -al /opt/applications/stock/
 
-      # 2. List files to verify the folder structure
-      - name: List files in repository
-        run: |
-          echo "Listing all files in the repository..."
-          ls -alh
-
-      # 3. Set up Docker Buildx
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      # 4. Log in to Docker Hub
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
+  generate-image:
+    name: generer une image
+    runs-on: ubuntu-latest
+    needs: ['create-folder']
+    steps:
+      - name: cloner le repertoire
+        uses: actions/checkout@master
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}  # Token Docker Hub (stocké dans les secrets GitHub)
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: sogoredev/${{env.IMAGE}}:${{env.VERSION}}
 
-      # 5. Build the Docker image 1
-      - name: Build Docker Image
-        run: |
-          docker build -t sogoredev/stock-front:${{ github.sha }} -f Dockerfile .
-          # Le tag 'github.sha' permet de taguer l'image avec l'ID unique du commit GitHub pour une version unique
-          # Si tu veux aussi utiliser un tag 'latest', tu peux l'ajouter :
-          # docker tag sogoredev/stock-front:${{ github.sha }} sogoredev/stock-front:latest
-
-      # 6. Push the Docker image to Docker Hub
-      - name: Push Docker Image
-        run: |
-          docker push sogoredev/stock-front:${{ github.sha }}
-          # Optionnellement, tu peux aussi pousser la version 'latest' si tu l'as taguée :
-          # docker push sogoredev/stock-front:latest
+  run-container:
+    name: generer un container
+    runs-on: ubuntu-latest
+    needs: [ 'create-folder','generate-image' ]
+    steps:
+      - name: cloner le repertoire
+        uses: actions/checkout@master
+      - name: copy file via ssh key
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: 22
+          source: "compose.yml"
+          target: /opt/applications/stock/${{env.IMAGE}}
+      - name: execute commands to run container
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: 22
+          script: |
+            docker-compose -f /opt/applications/stock/${{env.IMAGE}}/compose.yml up -d
