@@ -1,9 +1,7 @@
 services:
   stock-front:
-    image: sogoredev/stock-front:v0.0.1
+    image: docker.io/sogoredev/stock-front
     container_name: stock-front
-    user: root  # Exécuter avec l'utilisateur root pour éviter l'erreur de l'utilisateur manquant
-    entrypoint: /bin/bash -c "useradd -m node && exec /bin/bash"  # Ajouter l'utilisateur node au démarrage
     restart: always
     networks:
       - applications-network
