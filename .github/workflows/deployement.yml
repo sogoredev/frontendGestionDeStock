@@ -52,7 +52,7 @@ jobs:
       - name: cloner le repertoire
         uses: actions/checkout@v3  # Updated checkout action
       - name: copy file via ssh key
-        uses: appleboy/scp-action@v0.1.8
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
