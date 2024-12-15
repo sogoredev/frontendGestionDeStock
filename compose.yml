@@ -1,13 +1,10 @@
 services:
   stock-front:
-    image: sogoredev/stock-front:latest
+    image: sogoredev/stock-front:1.0.0
     container_name: stock-front
     restart: always
-    volumes:
-      - ./app:/app
     networks:
       - applications-network
-
 networks:
   applications-network:
     external: true

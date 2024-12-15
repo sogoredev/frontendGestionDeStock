@@ -2,7 +2,7 @@ name: deploy stock front
 on: [push]
 env:
   IMAGE: stock-front
-  VERSION: 0.0.1
+  VERSION: 1.0.0
 jobs:
 
   create-folder:
@@ -42,26 +42,16 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: docker.io/sogoredev/stock-front:0.0.1
+          tags: docker.io/sogoredev/${{env.IMAGE}}:${{env.VERSION}}
 
   run-container:
-    name: Générer un container
+    name: generer un container
     runs-on: ubuntu-latest
-    needs: [ 'create-folder', 'generate-image' ]
+    needs: [ 'create-folder','generate-image' ]
     steps:
-      - name: Cloner le répertoire
-        uses: actions/checkout@v3
-      - name: Vérifier la version de Docker
-        run: |
-          docker --version
-      - name: Installer Docker Compose
-        run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-      - name: Vérifier la version de Docker Compose
-        run: |
-          docker-compose --version
-      - name: Copier le fichier via SSH
+      - name: cloner le repertoire
+        uses: actions/checkout@master
+      - name: copy file via ssh key
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
@@ -70,7 +60,7 @@ jobs:
           port: 22
           source: "compose.yml"
           target: /opt/applications/stock/${{env.IMAGE}}
-      - name: Exécuter les commandes pour démarrer le container
+      - name: execute commands to run container
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.HOST }}
@@ -78,6 +68,4 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: 22
           script: |
-            set -e
-            docker-compose -f /opt/applications/stock/${{env.IMAGE}}/compose.yml up -d
-
+            docker compose -f /opt/applications/stock/${{env.IMAGE}}/compose.yml up -d
