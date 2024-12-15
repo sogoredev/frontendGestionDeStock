@@ -1,19 +1,21 @@
-# Etape 1 : Base
+# Étape 1 : Base
 ARG NODE_VERSION=22.3.0
 FROM node:${NODE_VERSION}-alpine as base
 WORKDIR /usr/src/app
 
-# Etape 2 : Dépendances
+# Étape 2 : Dépendances
 FROM base as deps
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
+# Installer Angular CLI globalement
+RUN npm install -g @angular/cli
 
-# Etape 3 : Construction
+# Étape 3 : Construction
 FROM deps as build
 COPY . .
 RUN npm run build
 
-# Etape 4 : Image finale avec NGINX
+# Étape 4 : Image finale avec NGINX
 FROM nginx:1.23.3-alpine
 
 # Créez un utilisateur sécurisé
