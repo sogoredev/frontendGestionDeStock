@@ -21,7 +21,7 @@ RUN adduser -D -u 1000 -s /bin/sh node
 
 # Copier l'application
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
-COPY /path/to/nginx-config.conf /etc/nginx/conf.d/default.conf
+COPY /path/to/nginx-config.conf /etc/nginx/conf.d/web.conf
 
 # Assurez-vous des permissions
 RUN chown -R node:node /usr/share/nginx/html
