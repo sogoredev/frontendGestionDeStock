@@ -1,3 +1,4 @@
+
 # syntax=docker/dockerfile:1
 
 # Comments are provided throughout this file to help you get started.
@@ -55,5 +56,3 @@ COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 COPY --from=build /usr/src/app/web-stock.conf /etc/nginx/conf.d/web-stock.conf
 
 EXPOSE 80
-
-
