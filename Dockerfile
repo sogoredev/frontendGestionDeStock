@@ -51,9 +51,15 @@ RUN npm run build
 # where the necessary files are copied from the build stage.
 FROM nginx:1.23.3-alpine
 
+# Ajouter l'utilisateur node si nécessaire
+RUN addgroup -S node && adduser -S node -G node
+
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 COPY --from=build /usr/src/app/web-stock.conf /etc/nginx/conf.d/web-stock.conf
 
+USER node
+
 EXPOSE 80
+
 
 
