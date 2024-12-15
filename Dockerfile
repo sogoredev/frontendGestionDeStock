@@ -55,4 +55,11 @@ FROM nginx:1.23.3-alpine
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 COPY --from=build /usr/src/app/web-stock.conf /etc/nginx/conf.d/web-stock.conf
 
+# Vérifier les permissions pour nginx
+RUN chown -R nginx:nginx /usr/share/nginx/html
+
+# Utiliser l'utilisateur nginx (par défaut)
+USER nginx
+
 EXPOSE 80
+
