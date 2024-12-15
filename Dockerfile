@@ -6,11 +6,6 @@
 
 # Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
-ARG NODE_VERSION=22.3.0
-
-################################################################################
-# Use node image for base image for all stages.
-FROM node:${NODE_VERSION}-alpine as base
 
 # Set working directory for all build stages.
 WORKDIR /usr/src/app
@@ -51,15 +46,9 @@ RUN npm run build
 # where the necessary files are copied from the build stage.
 FROM nginx:1.23.3-alpine
 
-# Ajouter l'utilisateur node si nécessaire
-RUN addgroup -S node && adduser -S node -G node
-
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 COPY --from=build /usr/src/app/web-stock.conf /etc/nginx/conf.d/web-stock.conf
 
-USER node
-
 EXPOSE 80
-
 
 

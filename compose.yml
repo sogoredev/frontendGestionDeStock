@@ -2,7 +2,6 @@ services:
   stock-front:
     image: sogoredev/stock-front:1.0.0
     container_name: stock-front
-    user: "node"
     restart: always
     networks:
       - applications-network
