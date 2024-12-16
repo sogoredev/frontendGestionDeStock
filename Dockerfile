@@ -21,13 +21,15 @@ RUN npm run build
 
 FROM nginx:1.23.3-alpine
 
+# Modifier nginx.conf pour supprimer la directive `user`
+RUN sed -i '/^user /d' /etc/nginx/nginx.conf
+
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 COPY --from=build /usr/src/app/web-stock.conf /etc/nginx/conf.d/web-stock.conf
 
-# Fix permissions
 RUN chown -R nginx:nginx /usr/share/nginx/html
 RUN chmod 644 /etc/nginx/conf.d/web-stock.conf
 
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]
+
