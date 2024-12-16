@@ -2,9 +2,8 @@ services:
   stock-front:
     image: sogoredev/stock-front:1.0.0
     container_name: stock-front
+    user: nginx
     restart: always
-    ports:
-      - "8085:8085"
     networks:
       - applications-network
 networks:
