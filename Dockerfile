@@ -3,6 +3,9 @@ ARG NODE_VERSION=22.3.0
 FROM node:${NODE_VERSION}-alpine as build
 WORKDIR /usr/src/app
 
+# Installer Angular CLI globalement
+RUN npm install -g @angular/cli
+
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 COPY . .
