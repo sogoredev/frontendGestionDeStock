@@ -27,6 +27,9 @@ RUN rm -rf /etc/nginx/conf.d/*
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 COPY --from=build /usr/src/app/web-stock.conf /etc/nginx/conf.d/web-stock.conf
 
+# Vérifier et ajuster les permissions si nécessaire
+RUN chmod 644 /etc/nginx/conf.d/web-stock.conf
+
 # Exposition du port 80
 EXPOSE 80
 
