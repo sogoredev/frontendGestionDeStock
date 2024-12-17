@@ -20,10 +20,11 @@ FROM nginx:1.23.3-alpine
 RUN rm -rf /etc/nginx/conf.d/*
 
 # Copier le fichier de configuration personnalisé
-COPY web-stock.conf /etc/nginx/conf.d/web-stock.conf
+#COPY web-stock-front.conf /etc/nginx/conf.d/web-stock.conf
 
 # Copier l'application Angular construite dans le dossier Nginx
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+COPY --from=build /usr/src/app/web-stock-front.conf /etc/nginx/conf.d/web-stock.conf
 
 # Exposition du port 80
 EXPOSE 80
