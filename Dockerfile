@@ -1,56 +1,58 @@
 # syntax=docker/dockerfile:1
 
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Dockerfile reference guide at
-# https://docs.docker.com/go/dockerfile-reference/
-
-# Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
-
+# Définir la version de Node.js utilisée dans l'image
 ARG NODE_VERSION=18.19.1
 
 ################################################################################
-# Use node image for base image for all stages.
+# Étape de base : utiliser l'image Node.js comme image de base
 FROM node:${NODE_VERSION}-alpine as base
 
-# Set working directory for all build stages.
+# Créer un utilisateur node s'il n'existe pas
+RUN adduser -D -g '' node
+
+# Définir le répertoire de travail pour toutes les étapes de construction
 WORKDIR /usr/src/app
 
-
 ################################################################################
-# Create a stage for installing production dependecies.
+# Étape pour installer les dépendances de production
 FROM base as deps
 
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.npm to speed up subsequent builds.
-# Leverage bind mounts to package.json and package-lock.json to avoid having to copy them
-# into this layer.
+# Télécharger les dépendances en utilisant un cache pour améliorer les builds ultérieurs
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
     --mount=type=cache,target=/root/.npm \
     npm ci --omit=dev
 
 ################################################################################
-# Create a stage for building the application.
+# Étape de construction de l'application
 FROM deps as build
 
-# Download additional development dependencies before building, as some projects require
-# "devDependencies" to be installed to build. If you don't need this, remove this step.
+# Télécharger les dépendances supplémentaires avant de construire l'application
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
     --mount=type=cache,target=/root/.npm \
     npm ci
 
-# Copy the rest of the source files into the image.
+# Copier le reste des fichiers sources dans l'image
 COPY . .
-# Run the build script.
+
+# Exécuter le script de build
 RUN npm run build
 
 ################################################################################
-# Create a new stage to run the application with minimal runtime dependencies
-# where the necessary files are copied from the build stage.
+# Étape pour exécuter l'application avec des dépendances minimales en runtime
+# Copier les fichiers nécessaires à partir de l'étape build
 FROM nginx:1.23.3-alpine
+
+# Copier les fichiers construits dans le répertoire de Nginx
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 COPY --from=build /usr/src/app/web-stock.conf /etc/nginx/conf.d/web-stock.conf
 
+# Changer les permissions des fichiers copiés pour l'utilisateur nginx
+RUN chown -R nginx:nginx /usr/share/nginx/html /etc/nginx/conf.d
 
+# Exposer le port 80 pour l'application
 EXPOSE 80
+
+# Définir l'utilisateur nginx pour exécuter Nginx
+USER nginx
