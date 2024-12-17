@@ -1,17 +1,34 @@
+
+# Étape 1 : Construction de l'application Angular
+FROM node:22.3.0-alpine AS build
+WORKDIR /usr/src/app
+
+# Installer Angular CLI globalement
+RUN npm install -g @angular/cli
+
+# Installer les dépendances (y compris devDependencies pour le build)
+COPY package.json package-lock.json ./
+RUN npm ci
+
+# Copier les fichiers source et construire l'application
+COPY . .
+RUN npm run build
+
+# Étape 2 : Configuration Nginx
 FROM nginx:1.23.3-alpine
 
-# Copier les fichiers construits dans le répertoire de Nginx
+# Nettoyage du dossier conf.d
+RUN rm -rf /etc/nginx/conf.d/*
+
+# Copier le fichier de configuration personnalisé
+#COPY ./web-stock.conf /etc/nginx/conf.d/web-stock.conf
+
+# Copier l'application Angular construite dans le dossier Nginx
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
-COPY --from=build /usr/src/app/web-stock.conf /etc/nginx/conf.d
+COPY --from=build /usr/src/app/web-stock.conf /etc/nginx/conf.d/web-stock.conf
 
-# Changer les permissions des fichiers copiés pour l'utilisateur nginx
-RUN chown -R nginx:nginx /usr/share/nginx/html /etc/nginx/conf.d
-
-# Passer à l'utilisateur root pour résoudre les problèmes d'accès
-USER root
-
-# Exposer le port 80 pour l'application
+# Exposition du port 80
 EXPOSE 80
 
-# Définir l'utilisateur nginx pour exécuter Nginx
-USER nginx
+# Lancer Nginx
+CMD ["nginx", "-g", "daemon off;"]
