@@ -7,9 +7,6 @@ ARG NODE_VERSION=18.19.1
 # Étape de base : utiliser l'image Node.js comme image de base
 FROM node:${NODE_VERSION}-alpine as base
 
-# Créer un utilisateur node s'il n'existe pas
-RUN adduser -D -g '' node
-
 # Définir le répertoire de travail pour toutes les étapes de construction
 WORKDIR /usr/src/app
 
@@ -46,7 +43,7 @@ FROM nginx:1.23.3-alpine
 
 # Copier les fichiers construits dans le répertoire de Nginx
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
-COPY --from=build /usr/src/app/web-stock.conf /etc/nginx/conf.d/web-stock.conf
+COPY --from=build /usr/src/app/web-stock.conf /etc/nginx/conf.d
 
 # Changer les permissions des fichiers copiés pour l'utilisateur nginx
 RUN chown -R nginx:nginx /usr/share/nginx/html /etc/nginx/conf.d
