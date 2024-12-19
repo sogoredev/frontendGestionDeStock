@@ -20,8 +20,8 @@ jobs:
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          key: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
           script: |
             docker stop angular-app || true
             docker rm angular-app || true
@@ -34,15 +34,15 @@ jobs:
           source: "./"
           target: "~/angular-app/"
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          key: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
 
       - name: Deploy on VPS
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          key: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
           script: |
             cd ~/angular-app
             docker-compose down
