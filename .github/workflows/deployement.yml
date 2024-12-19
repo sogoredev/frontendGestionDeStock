@@ -40,5 +40,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             cd ~/angular-app
-            docker-compose down
-            docker-compose up -d
+            docker build -t angular-app:latest .
+            docker stop angular-app || true
+            docker rm angular-app || true
+            docker run -d -p 8081:80 --name angular-app angular-app:latest
