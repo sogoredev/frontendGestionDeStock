@@ -17,7 +17,7 @@ jobs:
         run: docker build -t angular-app:latest .
 
       - name: Login to VPS
-        uses: appleboy/ssh-action@v0.1.7
+        uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -29,7 +29,7 @@ jobs:
             mkdir -p ~/angular-app
             rm -rf ~/angular-app/*
       - name: Copy files to VPS
-        uses: appleboy/scp-action@v0.1.8
+        uses: appleboy/scp-action@v0.1.6
         with:
           source: "./"
           target: "~/angular-app/"
