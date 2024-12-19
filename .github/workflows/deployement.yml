@@ -1,71 +1,49 @@
-name: deploy stock front
-on: [push]
-env:
-  IMAGE: stock-front
-  VERSION: 1.0.0
+name: Deploy Angular App
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
-
-  create-folder:
-    name: create folder
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: execute commands
-        uses: appleboy/ssh-action@v1.2.0
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t angular-app:latest .
+
+      - name: Login to VPS
+        uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
-          port: 22
-          script: |
-            echo "Creation du dossier sur le serveur.."
-            mkdir -p /opt/applications/stock/${{env.IMAGE}}
-            echo "Liste des fichiers :"
-            ls -al /opt/applications/stock/
-
-  generate-image:
-    name: generer une image
-    runs-on: ubuntu-latest
-    needs: ['create-folder']
-    steps:
-      - name: cloner le repertoire
-        uses: actions/checkout@master
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Login to Docker
-        uses: docker/login-action@v3
-        with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          tags: docker.io/sogoredev/${{env.IMAGE}}:${{env.VERSION}}
-
-  run-container:
-    name: generer un container
-    runs-on: ubuntu-latest
-    needs: [ 'create-folder','generate-image' ]
-    steps:
-      - name: clone le repertoire
-        uses: actions/checkout@master
-      - name: copy file via ssh key
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
-          port: 22
-          source: "compose.yml"
-          target: /opt/applications/stock/${{env.IMAGE}}
-      - name: execute commands to run container
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
-          port: 22
+          key: ${{ secrets.DOCKERHUB_TOKEN }}
           script: |
-            docker compose -f /opt/applications/stock/${{env.IMAGE}}/compose.yml up -d
+            docker stop angular-app || true
+            docker rm angular-app || true
+            docker rmi angular-app || true
+            mkdir -p ~/angular-app
+            rm -rf ~/angular-app/*
+      - name: Copy files to VPS
+        uses: appleboy/scp-action@v0.1.8
+        with:
+          source: "./"
+          target: "~/angular-app/"
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          key: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Deploy on VPS
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          key: ${{ secrets.DOCKERHUB_TOKEN }}
+          script: |
+            cd ~/angular-app
+            docker-compose down
+            docker-compose up -d
