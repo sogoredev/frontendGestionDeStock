@@ -14,8 +14,7 @@ COPY . .
 # Augmenter la mémoire pour Node.js (utile pour les builds Angular)
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 
-# Build de l'application
-RUN npm run build --configuration=production
+RUN npm run build
 
 # Étape 2: Servir l'application Angular
 FROM nginx:alpine
