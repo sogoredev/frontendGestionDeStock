@@ -1,12 +1,13 @@
 services:
-  stock-front:
-    image: sogoredev/stock-front:1.0.0
+  angular-app:
+    build: .
     container_name: stock-front
-    user: nginx
     restart: always
+    ports:
+      - "8080:80"
     networks:
-      - applications-network
+      - angular-network
+
 networks:
-  applications-network:
-    external: true
-    name: applications-network
+  angular-network:
+    driver: bridge
