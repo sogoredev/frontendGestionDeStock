@@ -40,9 +40,10 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             cd ~/angular-app
-            ls -l
             docker build --no-cache -t angular-app:latest .
+            ls -l
             docker run --rm -it angular-app:latest sh
             docker stop angular-app || true
             docker rm angular-app || true
             docker run -d -p 8081:80 --name angular-app angular-app:latest
+            ls -l
