@@ -17,7 +17,7 @@ jobs:
         run: docker build -t angular-app:latest .
 
       - name: Login to VPS
-        uses: appleboy/ssh-action@v0.1.8
+        uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.DOCKERHUB_USERNAME }}
