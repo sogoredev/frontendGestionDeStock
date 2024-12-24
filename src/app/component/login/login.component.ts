@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit{
           });
         }else if (err.status === 403) {
           console.error("Erreur lors de la connexion :", err);
-                     alert("Impossible de se connecter. Vérifiez votre connexion ou contactez l'administrateur. 403");
+                     alert("Impossible de se connecte. Vérifiez votre connexion ou contactez l'administrateur. 403");
         }
         else{
           console.log(err);
