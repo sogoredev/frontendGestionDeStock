@@ -25,7 +25,7 @@ export class LoginService {
       headers: new HttpHeaders().set("Content-Type", "application/json")
     }
     let body = { username: username, password: password };
-    return this.httpClient.post(`${environment.backendHost}/auth/login`, body, options);
+    return this.httpClient.post("http://stock.g2sservice.com:8080/api/auth/login", body, options);
   }
 
   loadProfile(data: any) {
