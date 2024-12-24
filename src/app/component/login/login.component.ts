@@ -44,23 +44,20 @@ export class LoginComponent implements OnInit{
       error: err => {
         // StockDuplicateException
         if (err.status === 409) {
-          this.dialog.open(ErrorDialogComponent, {
-            data: { message: err.error }
-          });
+           console.error("Erreur lors de la connexion :", err);
+            alert("Impossible de se connecter. Vérifiez votre connexion ou contactez l'administrateur. 409");
           //  EmptyException
         } else if(err.status === 404) {
-          this.dialog.open(ErrorDialogComponent, {
-            data: { message: err.error }
-          });
+           console.error("Erreur lors de la connexion :", err);
+           alert("Impossible de se connecter. Vérifiez votre connexion ou contactez l'administrateur. 404");
           // Bad request
         }else if(err.status === 400) {
           this.dialog.open(ErrorDialogComponent, {
             data: {message: err.error}
           });
         }else if (err.status === 403) {
-          this.dialog.open(ErrorDialogComponent, {
-            data: { message: "Nom d'utilisateur ou mot de passe incorrect" }
-          });
+          console.error("Erreur lors de la connexion :", err);
+                     alert("Impossible de se connecter. Vérifiez votre connexion ou contactez l'administrateur. 403");
         }
         else{
           console.log(err);

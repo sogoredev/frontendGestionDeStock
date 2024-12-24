@@ -20,13 +20,14 @@ export class LoginService {
   constructor( private httpClient: HttpClient, private router: Router) {
   }
 
-  public login(username: string, password: string){
+  public login(username: string, password: string) {
     let options = {
       headers: new HttpHeaders().set("Content-Type", "application/json")
-    }
+    };
     let body = { username: username, password: password };
     return this.httpClient.post(`${environment.backendHost}/auth/login`, body, options);
   }
+
 
   loadProfile(data: any) {
     this.accessToken = data['bearer'];
