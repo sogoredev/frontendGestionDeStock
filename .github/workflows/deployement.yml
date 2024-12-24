@@ -39,7 +39,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
               cd ~/angular-app
-              npm build --prod
+              npm build
               sudo cp -r /root/angular-app/dist/frontend-gestion-stock/browser/* /var/www/angular-app
 
 
