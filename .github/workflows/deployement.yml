@@ -22,36 +22,8 @@ jobs:
       - name: Copy files to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
-          source: "./"
-          target: "~/angular-app/"
+          source: "./dist/frontend-gestion-stock/browser/*"
+          target: "/var/www/angular-app"
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
-
-      - name: Deploy on VPS
-        uses: appleboy/ssh-action@v0.1.8
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
-          script: |
-              cd ~/angular-app
-              npm build
-              sudo cp -r /root/angular-app/dist/frontend-gestion-stock/browser/* /var/www/angular-app
-
-
-#      - name: Deploy on VPS
-#        uses: appleboy/ssh-action@v0.1.8
-#        with:
-#          host: ${{ secrets.HOST }}
-#          username: ${{ secrets.USERNAME }}
-#          key: ${{ secrets.PRIVATE_KEY }}
-#          script: |
-#            cd ~/angular-app
-#            docker build --no-cache -t angular-app:latest .
-#            ls -l
-#            docker run --rm -it angular-app:latest sh
-#            docker stop angular-app || true
-#            docker rm angular-app || true
-#            docker run -d -p 8081:80 --name angular-app angular-app:latest
-#            ls -l
