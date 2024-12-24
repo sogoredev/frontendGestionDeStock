@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
+  production: false,
   backendHost: "http://stock.g2sservice.com:8080/api"
 };
