@@ -39,18 +39,23 @@ span {
 }
 
 .container {
-  background-color: white;
-  max-width: 210px;
+  background-image: url("/assets/background.jpg") ;
+  background-size: cover;
+  background-position: center; 
+  background-repeat: no-repeat; 
+  height: 91vh; 
+  width: 100vw; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
-.container-body{
-  flex: auto;
-  margin: auto;
-  width: 30%;
-  height: auto;
-  padding-top: 6%;
-
+.container-body {
+  width: 30%; 
+  height: auto; 
+  background-color: #5A497D; 
+  border-radius: 5px; 
 }
 
 mat-card-title{
@@ -145,6 +150,71 @@ mat-progress-spinner {
 }
 
 
+/* Superposition pour le spinner */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Conteneur du spinner */
+.cube-spinner {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 5px;
+}
+
+/* Cube individuel */
+.cube {
+  width: 20px;
+  height: 20px;
+  background-color: #3f51b5; 
+  animation: cube-animation 1.2s infinite ease-in-out;
+}
+
+/* Animations des cubes */
+.cube:nth-child(1) {
+  animation-delay: 0s;
+}
+.cube:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.cube:nth-child(3) {
+  animation-delay: 0.6s;
+}
+.cube:nth-child(4) {
+  animation-delay: 0.9s;
+}
+
+@keyframes cube-animation {
+  0%, 100% {
+    transform: scale(1);
+    background-color: #3f51b5;
+  }
+  50% {
+    transform: scale(1.5);
+    background-color: #ff4081;
+  }
+}
+
+
+/* Couleur et taille du spinner */
+mat-spinner {
+  color: white;
+}
+
+
+
 /*Mobile*/
 @media (max-width: 600px) {
   .container-body {
@@ -166,6 +236,17 @@ mat-progress-spinner {
     margin: 10px 0 20px 0;
   }
 }
+
+.error-message {
+  border-radius: 5px;
+  background-color: white;
+  color: red;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 10px;
+  text-align: center;
+}
+
 
 
 
