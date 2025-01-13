@@ -207,8 +207,6 @@ mat-progress-spinner {
   }
 }
 
-
-/* Couleur et taille du spinner */
 mat-spinner {
   color: white;
 }
