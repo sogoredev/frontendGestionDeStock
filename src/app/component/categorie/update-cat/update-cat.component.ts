@@ -19,6 +19,7 @@ export class UpdateCatComponent implements OnInit{
   categorieForm!: FormGroup;
   spinnerProgress: boolean = false;
   catId: string | null = null;
+  
 
   constructor(
     private dialog: MatDialog,

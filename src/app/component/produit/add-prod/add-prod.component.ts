@@ -21,6 +21,7 @@ export class AddProdComponent implements OnInit{
   prodListForm!: FormGroup;
   listCategorie!: CategorieModel[];
   spinnerProgress: boolean = false;
+  
 
   constructor(private dialog: MatDialog,
               private route: Router,

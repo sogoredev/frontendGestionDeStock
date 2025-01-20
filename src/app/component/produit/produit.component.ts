@@ -32,6 +32,7 @@ export class ProduitComponent implements OnInit{
   public dataSource: any;
   public displayedColumns = ['designation', 'quantite', 'prixUnitaire', 'montant', 'date', 'cat','utilisateurProd','action']
   spinnerProgress: boolean = false;
+  isLoading: boolean = true;
 
   @ViewChild(MatPaginator) paginator! : MatPaginator;
   @ViewChild(MatSort) sort! : MatSort;
@@ -51,9 +52,11 @@ export class ProduitComponent implements OnInit{
           this.dataSource = new MatTableDataSource(this.listProduits);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+          this.isLoading = false;
         },
         error => {
           console.log(error);
+          this.isLoading = false;
         }
       )
   }

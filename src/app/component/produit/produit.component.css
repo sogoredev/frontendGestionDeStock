@@ -64,6 +64,8 @@ button{
   background-color: rgba(107, 60, 92, 0.75);
 }
 
+
+
 /*Version mobile*/
 @media (max-width: 768px) {
   .card-content {

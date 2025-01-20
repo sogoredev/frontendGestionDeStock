@@ -47,7 +47,10 @@ export class AddCatComponent implements OnInit{
       this.catService.ajoutCat(cat).subscribe({
         next: value => {
           this.spinnerProgress = false;
-          this.snackBar.open('Categorie enregistre avec succès!', 'Fermer', { duration: 3500 });
+            this.snackBar.open('Produit mis à jour avec succès!', 'Fermer', {
+            duration: 3000,
+            panelClass: ["snackbar"]
+             });
           this.route.navigateByUrl("/admin/categorie");
         },
         error: err => {

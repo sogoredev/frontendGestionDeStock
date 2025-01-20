@@ -28,6 +28,7 @@ export class DetteComponent implements OnInit{
   public listeDette!: Array<DetteModel>;
   displayedColumns = ['titre','quantite','reduction','montant','dateDebut','dateFin','clientDTO','utilisateurDette','status','action']
   spinnerProgress: boolean = false;
+  isLoading: boolean = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

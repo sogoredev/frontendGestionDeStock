@@ -7,17 +7,6 @@
 </mat-toolbar>
 
 <div class="container">
-  <!-- Barre de spinner -->
-  <div *ngIf="spinnerProgress" class="overlay">
-    <div class="cube-spinner">
-      <div class="cube"></div>
-      <div class="cube"></div>
-      <div class="cube"></div>
-      <div class="cube"></div>
-    </div>
-  </div>
-  
-
   <!-- Contenu principal -->
   <div class="container-body">
     <mat-card [formGroup]="loginForm">
@@ -49,6 +38,9 @@
           <button class="btn" (click)="login()" mat-raised-button>
             <div class="button-content">
               Se connecter
+              <div *ngIf="spinnerProgress">
+                <app-spinner/>
+              </div>
             </div>
           </button>
         </mat-card-actions>

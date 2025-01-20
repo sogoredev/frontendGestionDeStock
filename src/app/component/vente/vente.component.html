@@ -16,7 +16,8 @@
       </mat-form-field>
 
       <div class="mat-elevation-z8">
-        <table matSort mat-table [dataSource]="dataSource">
+        <app-loading *ngIf="isLoading"/>
+        <table *ngIf="!isLoading" matSort mat-table [dataSource]="dataSource">
 
           <!-- designation Column -->
           <ng-container matColumnDef="description" class="mat-elevation-z8">
@@ -101,7 +102,8 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+        <app-loading *ngIf="isLoading"/>
+        <mat-paginator *ngIf="!isLoading" [pageSizeOptions]="[5, 10, 20]"
                        showFirstLastButtons
                        aria-label="Select page of periodic elements">
         </mat-paginator>

@@ -5,7 +5,7 @@
         <button mat-icon-button (click)="retour()">
           <mat-icon>arrow_back_ios</mat-icon>
         </button>
-        CATEGOte
+        CATEGORIE
       </mat-card-title>
       <mat-card-actions>
         <button class="addCat" (click)="ajouterCategorie()" mat-raised-button>
@@ -24,8 +24,8 @@
       </mat-form-field>
 
       <div class="mat-elevation-z8">
-        <table matSort mat-table [dataSource]="dataSource">
-
+        <app-loading *ngIf="isLoading"/>
+        <table matSort [dataSource]="dataSource" *ngIf="!isLoading" mat-table>
           <!-- Nom Column -->
           <ng-container matColumnDef="nom" class="mat-elevation-z8">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
@@ -72,9 +72,10 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+        <app-loading *ngIf="isLoading"/>
+        <mat-paginator *ngIf="!isLoading" [pageSizeOptions]="[5, 10, 20]"
                        showFirstLastButtons
-                       aria-label="Sélectionner la page des éléments périodiques">
+                       aria-label="Select page of periodic elements">
         </mat-paginator>
       </div>
 

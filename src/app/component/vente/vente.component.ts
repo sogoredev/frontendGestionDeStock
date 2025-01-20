@@ -27,6 +27,7 @@ export class VenteComponent implements OnInit{
   public listeVente!: Array<VenteModel>;
   spinnerProgress: boolean = false;
   displayedColumns = ['description','quantite','montant','reduction','dateVente','clientDTO','utilisateurVente','status','action']
+  isLoading: boolean = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -47,10 +48,8 @@ export class VenteComponent implements OnInit{
           this.dataSource = new MatTableDataSource(this.listeVente);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
-        },
-        error =>(
-      console.log(error)
-    )
+          this.isLoading = false;
+        }
       )
 
   }

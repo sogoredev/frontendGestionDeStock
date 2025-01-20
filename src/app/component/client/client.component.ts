@@ -26,6 +26,7 @@ export class ClientComponent implements OnInit{
   public dataSource: any;
   public displayedColumns:any = ['nom', 'prenom', 'adresse', 'telephone', 'email', 'dateAjout','utilisateurClient', 'action'];
   spinnerProgress: boolean = false;
+  isLoading: boolean = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -45,6 +46,7 @@ export class ClientComponent implements OnInit{
           this.dataSource = new MatTableDataSource(this.listClient);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+          this.isLoading = false;
 
           this.dataSource.filterPredicate = (data: ClientModel, filter: string) => {
             return data.nom.toLowerCase().includes(filter) ||
@@ -55,6 +57,7 @@ export class ClientComponent implements OnInit{
           };
         },
         error => {
+          this.isLoading = false;
           console.log(error)
         }
       )

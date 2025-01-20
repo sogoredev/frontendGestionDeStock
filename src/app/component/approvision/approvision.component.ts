@@ -16,9 +16,6 @@ import {
   ConfirmationDialogApprovComponent
 } from "../popup-dialog/confirmation-dialog-approv/confirmation-dialog-approv.component";
 import {
-  ConfirmationDialogSuppDetteComponent
-} from "../popup-dialog/confirmation-dialog-supp-dette/confirmation-dialog-supp-dette.component";
-import {
   ConfirmationDialogSuppApprovComponent
 } from "../popup-dialog/confirmation-dialog-supp-approv/confirmation-dialog-supp-approv.component";
 
@@ -34,6 +31,7 @@ export class ApprovisionComponent implements OnInit{
   public dataSource: any;
   displayedColumns = ['designation','quantite','prixUnitaire','cbm','fraisTransit','montant','dateAchat','dateArriver','adresseFrs','etat','utilisateurAprov','action'];
   spinnerProgress: boolean = false;
+  isLoading: boolean = true;
 
   @ViewChild(MatPaginator) paginator! : MatPaginator;
   @ViewChild(MatSort) sort! : MatSort;
@@ -52,12 +50,17 @@ export class ApprovisionComponent implements OnInit{
           this.dataSource = new MatTableDataSource(this.listApprov);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+          this.isLoading = false;
 
           this.dataSource.filterPredicate = (data: ApprovisionModel, filter: string) => {
             return data.adresseFrs.toLowerCase().includes(filter) ||
               data.designation.toLowerCase().includes(filter);
           };
           
+        },
+        error => {
+          console.log(error)
+          this.isLoading = false;
         }
       )
   }

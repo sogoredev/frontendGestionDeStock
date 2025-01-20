@@ -30,6 +30,7 @@ export class CategorieComponent implements OnInit{
   public dataSource: any;
   public displayedColumns = ['nom', 'description', 'date', 'action'];
   spinnerProgress: boolean = false;
+  isLoading: boolean = true;
 
   @ViewChild(MatPaginator) paginator! : MatPaginator;
   @ViewChild(MatSort) sort! : MatSort;
@@ -51,9 +52,11 @@ export class CategorieComponent implements OnInit{
             this.dataSource = new MatTableDataSource(this.listCategorie);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
+            this.isLoading = false;
           },
           error => {
             console.log(error)
+            this.isLoading = false;
           }
         )
   }

@@ -153,7 +153,9 @@
       <button (click)="ajoutDette()" class="enregistrer" mat-raised-button>
         <div class="save">
           Enregistrer
-          <mat-progress-spinner *ngIf="spinnerProgress" [diameter]="30" mode="indeterminate"></mat-progress-spinner>
+          <div *ngIf="spinnerProgress">
+            <app-spinner/>
+          </div>
         </div>
       </button>
     </mat-card-actions>

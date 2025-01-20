@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit{
   totalClient!: number;
   listVente!: any[];
   totalMontantVentes: number = 0;
+  isLoading: boolean = true;
 
   constructor(private router: Router,
               private venteService: VenteService,
@@ -27,8 +28,10 @@ export class DashboardComponent implements OnInit{
       .subscribe(
         data =>{
           this.totalVente = data;
+          // this.isLoading = false;
         },
         error => {
+          this.isLoading = false;
           console.log(error)
         }
       )

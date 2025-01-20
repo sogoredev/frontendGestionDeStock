@@ -81,7 +81,10 @@ export class UpdateProdComponent implements OnInit{
         this.prodService.modifierProd(prod).subscribe(
           () => {
             this.spinnerProgress=false;
-            this.snackBar.open('Produit mis à jour avec succès!', 'Fermer', { duration: 3000 });
+            this.snackBar.open('Produit mis à jour avec succès!', 'Fermer', {
+               duration: 3000,
+               panelClass: ['custom-snackbar']
+              });
             this.router.navigateByUrl('/admin/produit');
           },
           error => {

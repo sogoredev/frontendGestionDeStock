@@ -66,6 +66,8 @@ import { ConfirmationDialogSuppProdComponent } from './component/popup-dialog/co
 import { ConfirmationDialogSuppCatComponent } from './component/popup-dialog/confirmation-dialog-supp-cat/confirmation-dialog-supp-cat.component';
 import { UpdateUserComponent } from './component/utilisateur/update-user/update-user.component';
 import { ConfirmationDialogSuppUserComponent } from './component/popup-dialog/confirmation-dialog-supp-user/confirmation-dialog-supp-user.component';
+import { LoadingComponent } from './component/loading/loading.component';
+import { SpinnerComponent } from './component/spinner/spinner.component';
 
 @NgModule({
 	declarations: [
@@ -104,6 +106,8 @@ import { ConfirmationDialogSuppUserComponent } from './component/popup-dialog/co
   ConfirmationDialogSuppCatComponent,
   UpdateUserComponent,
   ConfirmationDialogSuppUserComponent,
+  LoadingComponent,
+  SpinnerComponent,
 
 	],
 	imports: [BrowserModule,

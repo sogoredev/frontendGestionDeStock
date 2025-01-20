@@ -1,3 +1,5 @@
+
+<div ></div>
 <div class="container-body">
   <mat-card mat-card [formGroup]="catListForm">
     <mat-card-header>
@@ -29,9 +31,11 @@
       <button (click)="ajoutUser()" class="enregistrer" mat-raised-button>
         <div class="save">
           Enregistrer
-          <mat-progress-spinner *ngIf="spinnerProgress" [diameter]="30" mode="indeterminate"></mat-progress-spinner>
+          <div *ngIf="spinnerProgress">
+            <app-spinner/>
+          </div>
         </div>
-      </button>
+      </button>      
     </mat-card-actions>
   </mat-card>
 

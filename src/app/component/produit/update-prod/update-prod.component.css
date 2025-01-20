@@ -96,6 +96,7 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+
 /* Responsivité pour mobiles */
 @media (max-width: 768px) {
   .container-body {
