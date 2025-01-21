@@ -48,6 +48,7 @@ export class DetteComponent implements OnInit{
           this.dataSource = new MatTableDataSource(this.listeDette);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+          this.isLoading = false;
         },
         error =>(
           console.log(error)
