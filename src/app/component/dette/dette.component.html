@@ -17,7 +17,7 @@
 
       <div class="mat-elevation-z8">
         <app-loading *ngIf="isLoading"/>
-        <table matSort [dataSource]="dataSource" *ngIf="!isLoading" mat-table>
+        <table *ngIf="!isLoading" matSort mat-table [dataSource]="dataSource">
 
           <!-- designation Column -->
           <ng-container matColumnDef="titre" class="mat-elevation-z8">

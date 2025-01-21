@@ -50,9 +50,10 @@ export class DetteComponent implements OnInit{
           this.dataSource.sort = this.sort;
           this.isLoading = false;
         },
-        error =>(
-          console.log(error)
-        )
+        error => {
+          console.log(error);
+          this.isLoading = false;
+        }
       )
   }
 
