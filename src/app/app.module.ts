@@ -11,6 +11,7 @@ import { MatIcon, MatIconModule } from "@angular/material/icon";
 import { MatMenu, MatMenuModule } from "@angular/material/menu";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatList, MatListModule } from "@angular/material/list";
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { MatCard, MatCardAvatar, MatCardModule } from "@angular/material/card";
 import { MatFormField, MatFormFieldModule } from "@angular/material/form-field";
@@ -68,6 +69,7 @@ import { UpdateUserComponent } from './component/utilisateur/update-user/update-
 import { ConfirmationDialogSuppUserComponent } from './component/popup-dialog/confirmation-dialog-supp-user/confirmation-dialog-supp-user.component';
 import { LoadingComponent } from './component/loading/loading.component';
 import { SpinnerComponent } from './component/spinner/spinner.component';
+
 
 @NgModule({
 	declarations: [
@@ -140,7 +142,8 @@ import { SpinnerComponent } from './component/spinner/spinner.component';
 		IgxDialogModule,
 		IgxInputGroupModule,
 		IgxRippleModule,
-		IgxIconModule
+		IgxIconModule,
+		MatTabsModule
 
 	],
 	providers: [

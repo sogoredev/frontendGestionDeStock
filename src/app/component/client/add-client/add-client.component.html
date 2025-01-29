@@ -13,7 +13,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Nom</mat-label>
-        <input matInput formControlName="nom" maxlength="120" minlength="2" >
+        <input matInput formControlName="nom" maxlength="120" minlength="2">
         <mat-icon matPrefix>category</mat-icon>
         <mat-error *ngIf="clientListForm.get('nom')?.hasError('required') && clientListForm.get('nom')">
           Le nom est requis.
@@ -22,7 +22,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Prenom</mat-label>
-        <input matInput formControlName="prenom" maxlength="100" minlength="1" >
+        <input matInput formControlName="prenom" maxlength="100" minlength="1">
         <mat-icon matPrefix>description</mat-icon>
         <mat-error *ngIf="clientListForm.get('prenom')?.hasError('required') && clientListForm.get('prenom')">
           Le prénom est requis.
@@ -31,7 +31,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email" maxlength="100" minlength="2" >
+        <input matInput formControlName="email" maxlength="100" minlength="2">
         <mat-icon matPrefix>description</mat-icon>
         <mat-error *ngIf="clientListForm.get('email')?.hasError('required') && clientListForm.get('email')">
           L'email est requis.
@@ -45,7 +45,7 @@
         <mat-label>Telephone</mat-label>
         <span matTextPrefix>+223 &nbsp;</span>
         <input type="tel" matInput placeholder="83-52-28-56" formControlName="telephone"
-               (input)="formatTelephone($event)" required>
+          (input)="formatTelephone($event)" required>
         <mat-icon matSuffix>phone</mat-icon>
         <mat-error *ngIf="clientListForm.get('telephone')?.hasError('required') && clientListForm.get('telephone')">
           Le téléphone est requis.
@@ -54,7 +54,7 @@
 
       <mat-form-field class="adresse-form" appearance="outline">
         <mat-label>Adresse</mat-label>
-        <input matInput formControlName="adresse" maxlength="100" minlength="1" >
+        <input matInput formControlName="adresse" maxlength="100" minlength="1">
         <mat-icon matPrefix>description</mat-icon>
         <mat-error *ngIf="clientListForm.get('adresse')?.hasError('required') && clientListForm.get('adresse')">
           L'adresse est requis.
@@ -69,7 +69,7 @@
         <div class="save">
           Enregistrer
           <div *ngIf="spinnerProgress">
-            <app-spinner/>
+            <app-spinner />
           </div>
         </div>
       </button>

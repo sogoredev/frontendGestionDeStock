@@ -1,32 +1,32 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MatDialog} from "@angular/material/dialog";
-import {Router} from "@angular/router";
-import {Location} from "@angular/common";
-import {TypeAuth, UserModel} from "../../../models/user.model";
-import {ValidDialogComponent} from "../../popup-dialog/valid-dialog/valid-dialog.component";
-import {ErrorDialogComponent} from "../../popup-dialog/error-dialog/error-dialog.component";
-import {ClientModel} from "../../../models/client.model";
-import {ClientService} from "../../../services/client.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
+import { Router } from "@angular/router";
+import { Location } from "@angular/common";
+import { TypeAuth, UserModel } from "../../../models/user.model";
+import { ValidDialogComponent } from "../../popup-dialog/valid-dialog/valid-dialog.component";
+import { ErrorDialogComponent } from "../../popup-dialog/error-dialog/error-dialog.component";
+import { ClientModel } from "../../../models/client.model";
+import { ClientService } from "../../../services/client.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add-client',
   templateUrl: './add-client.component.html',
   styleUrl: './add-client.component.css'
 })
-export class AddClientComponent implements OnInit{
+export class AddClientComponent implements OnInit {
 
   clientListForm!: FormGroup;
   spinnerProgress: boolean = false;
 
   constructor(
-              private clientService: ClientService,
-              private dialog: MatDialog,
-              private route: Router,
-              private location: Location,
-              private fb: FormBuilder,
-              private snackBar: MatSnackBar,) {
+    private clientService: ClientService,
+    private dialog: MatDialog,
+    private route: Router,
+    private location: Location,
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar,) {
   }
 
   retour() {
@@ -79,16 +79,16 @@ export class AddClientComponent implements OnInit{
               data: { message: err.error }
             });
             //  ClientNotFoundException
-          } else if(err.status === 404) {
+          } else if (err.status === 404) {
             this.dialog.open(ErrorDialogComponent, {
               data: { message: err.error }
             });
             // EmailIncorrectException && EmptyException
-          }else if(err.status === 400) {
+          } else if (err.status === 400) {
             this.dialog.open(ErrorDialogComponent, {
-              data: {message: err.error}
+              data: { message: err.error }
             });
-          }else{
+          } else {
             console.log(err);
           }
           this.spinnerProgress = false;
