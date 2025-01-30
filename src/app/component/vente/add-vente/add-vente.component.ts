@@ -257,5 +257,23 @@ export class AddVenteComponent implements OnInit{
       clientDTO: [''],
     });
   }
+
+  formatTelephone(event: any) {
+    let input = event.target.value.replace(/\D/g, '');
+    if (input.length > 8) {
+      input = input.substring(0, 8);
+    }
+    if (input.length > 0) {
+      input = input.match(/.{1,2}/g)?.join('-') || input;
+    }
+    this.venteListForm.get('telephone')?.setValue(input, { emitEvent: false });
+  
+    // Validation du format du téléphone
+    if (input.length !== 8) {
+      this.venteListForm.get('telephone')?.setErrors({ invalidTelephone: true });
+    } else {
+      this.venteListForm.get('telephone')?.setErrors(null);
+    }
+  }
 }
 

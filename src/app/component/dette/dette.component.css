@@ -98,7 +98,7 @@ button{
   }
 
   mat-card-title {
-    font-size: 18px;
+    font-size: 25px;
   }
 
   mat-card-actions {
@@ -107,7 +107,8 @@ button{
   }
 
   button {
-    margin: 5px 0;
+    margin: 0;
+    font-size: 14px;
   }
 }
 

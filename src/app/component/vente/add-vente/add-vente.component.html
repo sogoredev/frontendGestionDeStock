@@ -38,10 +38,13 @@
                 <mat-icon matPrefix>location_on</mat-icon>
               </mat-form-field>
               <mat-form-field appearance="outline">
-                <mat-label>TELEPHONE</mat-label>
-                <input matInput formControlName="telephone" type="number" maxlength="100" minlength="2" required>
-                <mat-icon matPrefix>phone</mat-icon>
+                <mat-label>Telephone</mat-label>
+                <span matTextPrefix>+223 &nbsp;</span>
+                <input type="tel" matInput placeholder="83-52-28-56" formControlName="telephone"
+                  (input)="formatTelephone($event)" required>
+                <mat-icon matSuffix>phone</mat-icon>
               </mat-form-field>
+
               <mat-form-field appearance="outline">
                 <mat-label>EMAIL</mat-label>
                 <input matInput formControlName="email" maxlength="100" minlength="2">

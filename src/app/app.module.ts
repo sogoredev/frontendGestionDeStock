@@ -12,6 +12,7 @@ import { MatMenu, MatMenuModule } from "@angular/material/menu";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatList, MatListModule } from "@angular/material/list";
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 import { MatCard, MatCardAvatar, MatCardModule } from "@angular/material/card";
 import { MatFormField, MatFormFieldModule } from "@angular/material/form-field";
@@ -143,7 +144,8 @@ import { SpinnerComponent } from './component/spinner/spinner.component';
 		IgxInputGroupModule,
 		IgxRippleModule,
 		IgxIconModule,
-		MatTabsModule
+		MatTabsModule,
+		MatProgressBarModule
 
 	],
 	providers: [

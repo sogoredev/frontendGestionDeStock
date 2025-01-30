@@ -15,14 +15,20 @@ mat-card-actions {
 }
 
 button {
-  margin: 10px 2px 0 0;
+  margin: 0;
   border-radius: 5px;
   font-weight: 500;
 }
 
-.add {
+.add{
+  color: #6B3C5C;
+  font-weight: bold;
+  background-color: white;
+}
+
+.add:hover{
   color: white;
-  font-weight: bolder;
+  font-weight: bold;
   background-color: #6B3C5C;
 }
 
@@ -102,47 +108,28 @@ span{
   background-color: #F8B097;
 }
 
-.cards-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px; 
-}
-
 /* Responsivité pour les petits écrans */
 @media (max-width: 768px) {
   mat-card-content {
     flex-direction: column;
     align-items: center;
-    gap: 25px; 
-  }
-
-  mat-card-header {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  h4{
-    font-size: 25px;
-  }
-
-  .cards-container {
-    flex-direction: column;
-    gap: 20px; 
   }
 
   .card-vente,
   .card-budget,
+  .card-stock,
   .card-client {
     width: 100%;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
   }
 
   .content-vente,
   .content-budget,
+  .content-stock,
   .content-client {
-    font-size: 38px; 
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
   }
 
   mat-card-actions {
@@ -151,24 +138,13 @@ span{
     width: 100%;
   }
 
+  h4{
+    font-size: 25px;
+  }
+
   button {
-    width: 80%;
-    font-size: 10px;
-  }
-
-  .avatar {
-    width: 50px; 
-    height: 50px;
-  }
-
-  .icon {
-    font-size: 20px;
-  }
-
-  .header-vente,
-  .header-budget,
-  .header-client {
-    font-size: 25px; 
+    margin: 0;
+    font-size: 14px;
   }
 }
 
