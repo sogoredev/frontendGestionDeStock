@@ -110,11 +110,11 @@ export class AddVenteComponent implements OnInit{
   }
 
   ajouterNouveauClient(): void {
-    if (this.venteListForm.get('nom') ||
-        this.venteListForm.get('prenom')||
-        this.venteListForm.get('adresse') ||
-        this.venteListForm.get('telephone')||
-        this.venteListForm.get('email')) {
+    if (this.venteListForm.get('nom')?.invalid ||
+        this.venteListForm.get('prenom')?.invalid ||
+        this.venteListForm.get('adresse')?.invalid ||
+        this.venteListForm.get('telephone')?.invalid ||
+        this.venteListForm.get('email')?.invalid) {
       this.snackBar.open('Veuillez remplir tous les champs du nouveau client.', 'Fermer', { duration: 3500 });
       return;
     }
@@ -152,7 +152,7 @@ export class AddVenteComponent implements OnInit{
     }
   
     // Si un nouveau client est saisi, ajoute-le d'abord
-    if (this.venteListForm.value.nom && this.venteListForm.value.prenom) {
+    if (this.venteListForm.value.telephone) {
       this.ajouterNouveauClientEtEnregistrerVente();
       return;
     }
@@ -267,13 +267,6 @@ export class AddVenteComponent implements OnInit{
       input = input.match(/.{1,2}/g)?.join('-') || input;
     }
     this.venteListForm.get('telephone')?.setValue(input, { emitEvent: false });
-  
-    // Validation du format du téléphone
-    if (input.length !== 8) {
-      this.venteListForm.get('telephone')?.setErrors({ invalidTelephone: true });
-    } else {
-      this.venteListForm.get('telephone')?.setErrors(null);
-    }
   }
 }
 
