@@ -1,26 +1,26 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MatDialog} from "@angular/material/dialog";
-import {Router} from "@angular/router";
-import {Location} from "@angular/common";
-import {ProduitService} from "../../../services/produit.service";
-import {VenteService} from "../../../services/vente.service";
-import {ProduitModel} from "../../../models/produit.model";
-import {ClientService} from "../../../services/client.service";
-import {ClientModel} from "../../../models/client.model";
-import {VenteModel} from "../../../models/vente.model";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
-import {ErrorDialogComponent} from "../../popup-dialog/error-dialog/error-dialog.component";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
+import { Router } from "@angular/router";
+import { Location } from "@angular/common";
+import { ProduitService } from "../../../services/produit.service";
+import { VenteService } from "../../../services/vente.service";
+import { ProduitModel } from "../../../models/produit.model";
+import { ClientService } from "../../../services/client.service";
+import { ClientModel } from "../../../models/client.model";
+import { VenteModel } from "../../../models/vente.model";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { ErrorDialogComponent } from "../../popup-dialog/error-dialog/error-dialog.component";
 
 @Component({
   selector: 'app-add-vente',
   templateUrl: './add-vente.component.html',
-  styleUrl: './add-vente.component.css'
+  styleUrl: './add-vente.component.css',
 })
-export class AddVenteComponent implements OnInit{
+export class AddVenteComponent implements OnInit {
 
   venteListForm!: FormGroup;
   listProd!: ProduitModel[];
@@ -28,18 +28,18 @@ export class AddVenteComponent implements OnInit{
   produitsSelectionnes: any[] = [];
   spinnerProgress: boolean = false;
   public dataSource: any;
-  displayedColumns = ['designation','quantite',"prixUnitaire",'reduction','montant','action'];
+  displayedColumns = ['designation', 'quantite', "prixUnitaire", 'reduction', 'montant', 'action'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private dialog: MatDialog,
-              private route: Router,
-              private location: Location,
-              private fb: FormBuilder,
-              private snackBar: MatSnackBar,
-              private venteService: VenteService,
-              private prodService: ProduitService,
-              private clientService: ClientService) {
+    private route: Router,
+    private location: Location,
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar,
+    private venteService: VenteService,
+    private prodService: ProduitService,
+    private clientService: ClientService) {
     this.dataSource = new MatTableDataSource([]);
   }
 
@@ -59,7 +59,7 @@ export class AddVenteComponent implements OnInit{
         console.log(error);
       });
 
-      // Initialisation du formulaire
+    // Initialisation du formulaire
     this.venteListForm = this.fb.group({
       description: [''],
       reduction: [''],
@@ -80,13 +80,37 @@ export class AddVenteComponent implements OnInit{
     this.dataSource.sort = this.sort;
   }
 
+  // Méthode pour afficher un SnackBar de succès
+  showSuccessSnackBar(message: string): void {
+    this.snackBar.open(message, 'Fermer', {
+      duration: 3500,
+      panelClass: ['success'],
+    });
+  }
+
+  // Méthode pour afficher un SnackBar d'erreur
+  showErrorSnackBar(message: string): void {
+    this.snackBar.open(message, 'Fermer', {
+      duration: 3500,
+      panelClass: ['error'], 
+    });
+  }
+
+  // Méthode pour afficher un SnackBar d'information
+  showInfoSnackBar(message: string): void {
+    this.snackBar.open(message, 'Fermer', {
+      duration: 3500,
+      panelClass: ['info'], 
+    });
+  }
+
   onSelectProduit(prod: ProduitModel) {
     // Vérifier si le produit est déjà sélectionné
     const produitExiste = this.produitsSelectionnes.some(produit => produit.idProd === prod.idProd);
 
     if (produitExiste) {
       // Afficher un message ou notifier l'utilisateur que le produit est déjà sélectionné
-      this.snackBar.open("Le produit "  + prod.designation + " est déjà sélectionné.", 'Fermer', { duration: 3500 });
+      this.snackBar.open("Le produit " + prod.designation + " est déjà sélectionné.", 'Fermer', { duration: 3500 });
       return;
     }
 
@@ -109,58 +133,23 @@ export class AddVenteComponent implements OnInit{
     });
   }
 
-  ajouterNouveauClient(): void {
-    if (this.venteListForm.get('nom')?.invalid ||
-        this.venteListForm.get('prenom')?.invalid ||
-        this.venteListForm.get('adresse')?.invalid ||
-        this.venteListForm.get('telephone')?.invalid ||
-        this.venteListForm.get('email')?.invalid) {
-      this.snackBar.open('Veuillez remplir tous les champs du nouveau client.', 'Fermer', { duration: 3500 });
-      return;
-    }
-  
-    const nouveauClient: ClientModel = {
-      idClient: null,
-      nom: this.venteListForm.value.nom,
-      prenom: this.venteListForm.value.prenom,
-      adresse: this.venteListForm.value.adresse,
-      telephone: this.venteListForm.value.telephone,
-      email: this.venteListForm.value.email,
-    };
-  
-    this.clientService.ajoutClient(nouveauClient).subscribe({
-      next: (client) => {
-        // Une fois le client créé, mets à jour le formulaire de vente avec le nouveau client
-        this.venteListForm.patchValue({
-          clientDTO: client, // Associe le nouveau client à la vente
-        });
-        this.snackBar.open('Nouveau client ajouté avec succès!', 'Fermer', { duration: 3500 });
-      },
-      error: (err) => {
-        this.snackBar.open('Erreur lors de l\'ajout du client.', 'Fermer', { duration: 3500 });
-        console.error(err);
-      },
-    });
-  }
-  
-
 
   ajoutVente() {
     if (!this.venteListForm.invalid) {
       this.venteListForm.markAllAsTouched();
       return;
     }
-  
+
     // Si un nouveau client est saisi, ajoute-le d'abord
     if (this.venteListForm.value.telephone) {
       this.ajouterNouveauClientEtEnregistrerVente();
       return;
     }
-  
+
     // Si un client existant est sélectionné, ajoute la vente directement
     this.enregistrerVente();
   }
-  
+
   ajouterNouveauClientEtEnregistrerVente() {
     const nouveauClient: ClientModel = {
       idClient: null,
@@ -170,25 +159,41 @@ export class AddVenteComponent implements OnInit{
       telephone: this.venteListForm.value.telephone,
       email: this.venteListForm.value.email,
     };
-  
+
     this.clientService.ajoutClient(nouveauClient).subscribe({
       next: (client) => {
         // Une fois le client créé, mets à jour le formulaire de vente avec le nouveau client
         this.venteListForm.patchValue({
           clientDTO: client, // Associe le nouveau client à la vente
         });
-  
+
         // Enregistrer la vente avec le nouveau client
         this.enregistrerVente();
       },
       error: (err) => {
+        // ClientDuplicateException
+        if (err.status === 409) {
+          this.dialog.open(ErrorDialogComponent, {
+            data: { message: err.error }
+          });
+          //  ClientNotFoundException
+        } else if (err.status === 404) {
+          this.dialog.open(ErrorDialogComponent, {
+            data: { message: err.error }
+          });
+          // EmailIncorrectException && EmptyException
+        } else if (err.status === 400) {
+          this.dialog.open(ErrorDialogComponent, {
+            data: { message: err.error }
+          });
+        } else {
+          console.log(err);
+        }
         this.spinnerProgress = false;
-        this.snackBar.open('Erreur lors de l\'ajout du client.', 'Fermer', { duration: 3500 });
-        console.error(err);
       },
     });
   }
-  
+
   enregistrerVente() {
     this.spinnerProgress = true;
     const vente: VenteModel = {
@@ -200,7 +205,7 @@ export class AddVenteComponent implements OnInit{
       produitsVend: this.venteListForm.value.produitsVend,
       clientDTO: this.venteListForm.value.clientDTO,
     };
-  
+
     this.venteService.ajoutVente(vente).subscribe({
       next: (value) => {
         this.spinnerProgress = false;
