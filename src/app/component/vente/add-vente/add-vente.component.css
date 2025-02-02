@@ -91,14 +91,24 @@ button{
   border-bottom: #6B3C5C 2px solid;
   background-color: none;
   color: #6B3C5C;
+
 }
 
 #icon{
   margin: 5px 30px -40px -170px; 
+
 }
 
 #label{
   margin: 5px 10px;
+
+}
+
+.fixed {
+  background-color: white;
+  position: sticky;
+  top: 0; 
+  z-index: 1; 
 }
 
 /* Responsive design */
