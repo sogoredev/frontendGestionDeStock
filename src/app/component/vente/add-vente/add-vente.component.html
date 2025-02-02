@@ -89,7 +89,7 @@
               
               <!-- Liste des produits filtrés -->
               <mat-option *ngFor="let prod of filteredProd" [value]="prod" (click)="onSelectProduit(prod)">
-                {{ prod.designation }}
+                {{ prod.designation +' : '+ prod.prixUnitaire + ' FCFA'}}
               </mat-option>
             </mat-select>
             <mat-icon matPrefix>shopping_cart</mat-icon>

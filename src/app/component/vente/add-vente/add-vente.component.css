@@ -87,15 +87,18 @@ button{
 }
 
 #search-input {
-  margin: 5px 30px;
+  width: 100%;
+  margin: 5px 0 5px 30px;
   border-bottom: #6B3C5C 2px solid;
   background-color: none;
   color: #6B3C5C;
+  font-weight: bold;
+  width: 97%;
 
 }
 
 #icon{
-  margin: 5px 30px -40px -170px; 
+  margin: 2px 30px -40px -170px; 
 
 }
 
