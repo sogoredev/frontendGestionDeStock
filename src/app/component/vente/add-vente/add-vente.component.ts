@@ -28,6 +28,7 @@ export class AddVenteComponent implements OnInit {
   produitsSelectionnes: any[] = [];
   spinnerProgress: boolean = false;
   public dataSource: any;
+  filteredProd: ProduitModel[] = [];
   displayedColumns = ['designation', 'quantite', "prixUnitaire", 'reduction', 'montant', 'action'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -44,6 +45,7 @@ export class AddVenteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     // Initialisation des produits et clients
     this.prodService.listProduit()
       .subscribe(data => {
@@ -78,6 +80,26 @@ export class AddVenteComponent implements OnInit {
     // Configuration du paginator et du sort
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    // Initialisation des produits
+    this.prodService.listProduit().subscribe(
+      (data) => {
+        this.listProd = data;
+        this.filteredProd = data; 
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  // Méthode pour filtrer les produits en fonction de la recherche
+  onSearchChange(event: Event): void {
+    const searchValue = (event.target as HTMLInputElement).value.toLowerCase();
+    this.filteredProd = this.listProd.filter((prod) =>
+      prod.designation.toLowerCase().includes(searchValue)
+    );
+  
   }
 
   // Méthode pour afficher un SnackBar de succès

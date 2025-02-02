@@ -86,21 +86,19 @@ button{
   background-color: #6B3C5C;
 }
 
-/* add-vente.component.css */
-
-::ng-deep .success {
-  background-color: #4CAF50 !important;
-  color: white !important;
+#search-input {
+  margin: 5px 30px;
+  border-bottom: #6B3C5C 2px solid;
+  background-color: none;
+  color: #6B3C5C;
 }
 
-::ng-deep .error {
-  background-color: #F44336 !important;
-  color: white !important;
+#icon{
+  margin: 5px 30px -40px -170px; 
 }
 
-::ng-deep .info {
-  background-color: #2196F3 !important;
-  color: white !important;
+#label{
+  margin: 5px 10px;
 }
 
 /* Responsive design */
