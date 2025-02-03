@@ -65,8 +65,4 @@ export class DashboardComponent implements OnInit{
   ajouterVente() {
     this.router.navigateByUrl("/admin/addVente")
   }
-
-  ajouterClient() {
-    this.router.navigateByUrl("/admin/addClient")
-  }
 }

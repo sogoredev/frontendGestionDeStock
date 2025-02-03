@@ -26,7 +26,7 @@ export class VenteComponent implements OnInit{
   public dataSource: any;
   public listeVente!: Array<VenteModel>;
   spinnerProgress: boolean = false;
-  displayedColumns = ['description','quantite','montant','reduction','dateVente','clientDTO','utilisateurVente','status','action']
+  displayedColumns = ['id','description','quantite','montant','reduction','dateVente','clientDTO','utilisateurVente','status','action']
   isLoading: boolean = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
