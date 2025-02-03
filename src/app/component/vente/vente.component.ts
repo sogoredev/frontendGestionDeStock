@@ -54,6 +54,8 @@ export class VenteComponent implements OnInit{
 
   }
 
+  // vente add
+
   ajouterVente() {
     this.router.navigateByUrl("/admin/addVente")
   }
