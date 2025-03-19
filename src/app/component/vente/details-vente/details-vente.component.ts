@@ -48,7 +48,7 @@ export class DetailsVenteComponent {
 
   }
 
-    // Méthode pour formater la date
+    // Méthode pour formater la date te
     formatDate(date: Date): string {
       return <string>this.datePipe.transform(date, 'dd/MM/yyyy');
     }
