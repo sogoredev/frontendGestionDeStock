@@ -27,7 +27,7 @@ export class VenteComponent implements OnInit{
   public dataSource: any;
   public listeVente!: VenteDAOModel[];
   spinnerProgress: boolean = false;
-  displayedColumns = ['id','clientNom','clientPrenom','clientTel','quantite','montant','reduction','dateVente','utilisateurVente','status','action']
+  displayedColumns = ['id','clientNom','clientPrenom','clientTel','designation','quantite','montant','reduction','dateVente','utilisateurVente','status','action']
   isLoading: boolean = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -47,6 +47,7 @@ export class VenteComponent implements OnInit{
         data => {
           this.listeVente = data;
           this.dataSource = new MatTableDataSource(this.listeVente);
+          console.log(this.dataSource.data);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           this.isLoading = false;

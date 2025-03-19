@@ -52,6 +52,24 @@ tr:nth-child(even) {
     background-color: #f9f9f981;
 }
 
+.annuler{
+    color: white;
+    background-color: red;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .traiter{
+    color: white;
+    background-color: rgba(94, 175, 1, 0.6);
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+  }
+
 
 
 /* Améliorer l'affichage mobile */

@@ -20,7 +20,7 @@
         <p><strong>Adresse:</strong> {{ vente.vente.clientDTO.adresse }}</p>
         <p><strong>Téléphone:</strong> {{ vente.vente.clientDTO.telephone }}</p>
         <p><strong>Email:</strong> {{ vente.vente.clientDTO.email }}</p>
-        <p><strong>Date:</strong> {{ vente.vente.clientDTO.dateAjout }}</p>
+        <p><strong>Date:</strong> {{ vente.vente.clientDTO.dateAjout | date: 'dd/MM/yyyy' }}</p>
         <p><strong>Créé par:</strong> {{ vente.vente.clientDTO.utilisateurClient?.nom }}</p>
       </div>
     </mat-card-content>
@@ -34,8 +34,11 @@
       <div *ngIf="vente">
         <p><strong>Quantité Totale:</strong> {{ vente.vente.quantite }} f</p>
         <p><strong>Montant Total:</strong> {{ vente.vente.montant }} f</p>
-        <p><strong>Statut:</strong> {{ vente.vente.status }}</p>
-        <p><strong>Date de Vente:</strong> {{ vente.vente.dateVente }}</p>
+        <p><strong>Statut:</strong></p>
+        <div [ngClass]="{'traiter': vente.vente.status === 'TRAITER', 'annuler': vente.vente.status === 'ANNULER'}">
+          {{ vente.vente.status }}
+        </div>                
+        <p><strong>Date de Vente:</strong> {{ vente.vente.dateVente | date: 'dd/MM/yyyy' }}</p>
         <p><strong>Créé par:</strong> {{ vente.vente.utilisateurVente?.nom }}</p>
         <p><strong>Note:</strong> {{ vente.vente.note }}</p>
       </div>
@@ -73,7 +76,7 @@
 
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef> Date </th>
-        <td mat-cell *matCellDef="let produit"> {{formatDate(produit.date)}} </td>
+        <td mat-cell *matCellDef="let produit"> {{produit.date | date: 'dd/MM/yyyy' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="categorieStock">
