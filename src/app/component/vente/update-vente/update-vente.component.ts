@@ -40,17 +40,17 @@ export class UpdateVenteComponent implements OnInit{
               }
 
   ngOnInit(): void {
-    this.venteId = this.router.snapshot.paramMap.get('idVente');
-    if (this.venteId) {
-        this.venteService.afficher(this.venteId).subscribe(
-        (vente: VenteModel) => {
-          this.venteListForm.patchValue(vente)
-        },
-        error => {
-          console.error('Erreur lors du chargement du vente:', error);
-        }
-      );
-    }
+    // this.venteId = this.router.snapshot.paramMap.get('idVente');
+    // if (this.venteId) {
+    //     this.venteService.afficher(this.venteId).subscribe(
+    //     (vente: VenteModel) => {
+    //       this.venteListForm.patchValue(vente)
+    //     },
+    //     error => {
+    //       console.error('Erreur lors du chargement du vente:', error);
+    //     }
+    //   );
+    // }
   }
 
   modifierVente() {

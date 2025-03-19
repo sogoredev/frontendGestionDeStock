@@ -26,6 +26,7 @@ import {UpdateClientComponent} from "./component/client/update-client/update-cli
 import {UpdateApprovComponent} from "./component/approvision/update-approv/update-approv.component";
 import {UpdateDetteComponent} from "./component/dette/update-dette/update-dette.component";
 import {UpdateUserComponent} from "./component/utilisateur/update-user/update-user.component";
+import { DetailsVenteComponent } from './component/vente/details-vente/details-vente.component';
 
 const routes: Routes = [
   {path: "", component: LoginComponent},
@@ -54,6 +55,7 @@ const routes: Routes = [
       {path: "vente", component: VenteComponent},
       {path: "addVente", component: AddVenteComponent},
       {path: "updateVente/:idVente", component: UpdateVenteComponent},
+      {path: "detailsVente/:idVente", component: DetailsVenteComponent},
       {path: "addUser", component: AddUserComponent},
       {path: "updateUser/:id", component: UpdateUserComponent},
       {

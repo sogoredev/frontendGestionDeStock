@@ -4,6 +4,7 @@ import {VenteService} from "../../services/vente.service";
 import {CategorieModel} from "../../models/categorie.model";
 import {ClientService} from "../../services/client.service";
 import {VenteModel} from "../../models/vente.model";
+import { VenteDAOModel } from '../../models/venteDAO.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,7 @@ export class DashboardComponent implements OnInit{
 
   totalVente!: number;
   totalClient!: number;
-  listVente!: any[];
+  listVente!: VenteDAOModel[];
   totalMontantVentes: number = 0;
   isLoading: boolean = true;
 
@@ -59,7 +60,7 @@ export class DashboardComponent implements OnInit{
   }
 
   calculateTotalMontant() {
-    this.totalMontantVentes = this.listVente.reduce((acc, vente) => acc + vente.montant, 0);
+    // this.totalMontantVentes = this.listVente.reduce((acc, vente) => acc + vente.montant, 0);
   }
 
   ajouterVente() {

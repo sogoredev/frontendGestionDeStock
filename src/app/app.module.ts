@@ -70,6 +70,7 @@ import { UpdateUserComponent } from './component/utilisateur/update-user/update-
 import { ConfirmationDialogSuppUserComponent } from './component/popup-dialog/confirmation-dialog-supp-user/confirmation-dialog-supp-user.component';
 import { LoadingComponent } from './component/loading/loading.component';
 import { SpinnerComponent } from './component/spinner/spinner.component';
+import { DetailsVenteComponent } from './component/vente/details-vente/details-vente.component';
 
 
 @NgModule({
@@ -111,6 +112,7 @@ import { SpinnerComponent } from './component/spinner/spinner.component';
   ConfirmationDialogSuppUserComponent,
   LoadingComponent,
   SpinnerComponent,
+  DetailsVenteComponent,
 
 	],
 	imports: [BrowserModule,

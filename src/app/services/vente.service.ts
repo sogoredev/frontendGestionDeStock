@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { VenteDAOModel } from '../models/venteDAO.model';
 import { VenteModel } from '../models/vente.model';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
@@ -13,16 +14,16 @@ export class VenteService {
 
   constructor(private http: HttpClient) { }
 
-  public listVente(): Observable<Array<VenteModel>> {
-    return this.http.get<Array<VenteModel>>(`${environment.backendHost}/vente/listeVente`);
+  public listVente(): Observable<VenteDAOModel[]> {
+    return this.http.get<VenteDAOModel[]>(`${environment.backendHost}/vente/listeVente`);
   }
 
   public totalVente(){
     return  this.http.get<number>(`${environment.backendHost}/vente/totalVente`)
   }
 
-  afficher(idVente: string): Observable<VenteModel> {
-    return this.http.get<VenteModel>(`${environment.backendHost}/vente/afficherVente`, {
+  afficher(idVente: string): Observable<VenteDAOModel> {
+    return this.http.get<VenteDAOModel>(`${environment.backendHost}/vente/afficherVente`, {
       params: new HttpParams().set('idVente', idVente)
     });
   }
@@ -45,8 +46,8 @@ export class VenteService {
     });
   }
 
-  supprimer(vente: VenteModel) {
-    return this.http.put<VenteModel>(`${environment.backendHost}/vente/supprimerVente`, vente, {
+  supprimer(venteId: string) {
+    return this.http.put<VenteModel>(`${environment.backendHost}/vente/supprimerVente`, venteId, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     });
   }

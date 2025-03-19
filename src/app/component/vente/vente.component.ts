@@ -3,6 +3,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {VenteService} from "../../services/vente.service";
 import {VenteModel} from "../../models/vente.model";
+import {VenteDAOModel} from "../../models/venteDAO.model";
 import {DatePipe} from "@angular/common";
 import {Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
@@ -24,9 +25,9 @@ import {ApprovisionModel} from "../../models/approvision.model";
 export class VenteComponent implements OnInit{
 
   public dataSource: any;
-  public listeVente!: Array<VenteModel>;
+  public listeVente!: VenteDAOModel[];
   spinnerProgress: boolean = false;
-  displayedColumns = ['id','description','quantite','montant','reduction','dateVente','clientDTO','utilisateurVente','status','action']
+  displayedColumns = ['id','clientNom','clientPrenom','clientTel','quantite','montant','reduction','dateVente','utilisateurVente','status','action']
   isLoading: boolean = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -69,7 +70,7 @@ export class VenteComponent implements OnInit{
     this.router.navigateByUrl(`/admin/updateVente/${idVente}`)
   }
 
-  supprimer(vente: VenteModel) {
+  supprimer(venteId: string) {
     const dialogRef = this.dialog.open(ConfirmationDialogSuppVenteComponent, {
       width: '400px',
     });
@@ -77,7 +78,7 @@ export class VenteComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       if (result){
         this.spinnerProgress= true;
-        this.venteService.supprimer(vente).subscribe(
+        this.venteService.supprimer(venteId).subscribe(
           response => {
             this.spinnerProgress= false;
             this.ngOnInit();
@@ -97,9 +98,9 @@ export class VenteComponent implements OnInit{
     })
   }
 
-  details() {
-
-  }
+  details(idVente: string) {
+      this.router.navigateByUrl(`/admin/detailsVente/${idVente}`)
+    }
 
   annuler(vente: VenteModel) {
     console.log(vente);
